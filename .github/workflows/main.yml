@@ -1,0 +1,42 @@
+# This is the name of the workflow
+name: CI
+
+# Controls when the actions will run or when they will not
+# Basically an if condition to start running the actions
+on:
+  # A condition which specifies when the push is made the action will
+  # be done, another nested if
+  push:
+    # Another nested if which specifies that when only the push is made
+    # to the master branch
+    branches: [ master ]
+  # Condition to make the actions when the pull request is made on
+  # the master branch
+  pull_request:
+    branches: [ master ]
+    
+  # This will allow to manually run this workflow from the actions tab
+  workflow_dispatch:
+  
+# Definition of all the jobs which will be carried out when the above conditions
+# are satisfied, these are the actions which will be performed
+jobs:
+  # Name of the job which will be carried out
+  build:
+    # defines on which device the particular job will be executed
+    runs-on: ubuntu-latest
+    
+    steps:
+      # This will made our repository accessible to the Github Workspace
+      # and so our job can use it, after the checkout we wil continue
+      - uses: actions/checkout@v2
+      
+      # Running a single line command on our ubuntu machine
+      - name: Running single line command
+        run: echo Hello, World!
+        
+      # Running a multi line command
+      - name: Running multi line command
+        run: |
+          echo First, Hello-World!
+          echo Second, Hello-World!
